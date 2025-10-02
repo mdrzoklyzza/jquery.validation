@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login/Register</title>
+  <!-- ✅ Updated Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Times New Roman", serif;
+      background: url('https://i.pinimg.com/1200x/df/8e/46/df8e46df1badf58ff032280f2624e28d.jpg') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-box {
+      width: 360px;
+      max-width: 100%;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.75);
+      border: 2px solid #000;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      padding: 25px;
+      color: #000;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .input-group {
+      position: relative;
+      margin: 15px 0;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 40px;
+      border: 1px solid #ccc;
+      border-radius: 50px;
+      outline: none;
+      font-size: 14px;
+      background: rgba(255,255,255,0.9);
+      color: #000;
+      box-sizing: border-box;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #000; /* ensure visible */
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 50px;
+      background: #FF6347;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #E5533D;
+    }
+
+    .toggle {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .error {
+      display: block;
+      font-size: 12px;
+      color: darkred;
+      font-weight: bold;
+      margin-top: 4px;
+      text-align: left;
+      padding-left: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div class="form-box" id="loginBox">
+    <h2>Login</h2>
+    <div class="input-group">
+      <i class="fa-solid fa-user"></i>
+      <input type="text" id="loginUser" placeholder="Enter your username" required>
+    </div>
+    <div class="error" id="loginUserError"></div>
+    <div class="input-group">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" id="loginPassword" placeholder="Enter your password" required>
+    </div>
+    <div class="error" id="loginPassError"></div>
+    <button class="btn" onclick="login()">Login</button>
+    <div class="toggle" onclick="showRegister()">Don’t have an account? Register</div>
+  </div>
+
+  <!-- REGISTER -->
+  <div class="form-box" id="registerBox" style="display:none;">
+    <h2>Register</h2>
+    <div class="input-group">
+      <i class="fa-solid fa-user"></i>
+      <input type="text" id="regUser" placeholder="Enter your username" required>
+    </div>
+    <div class="error" id="regUserError"></div>
+    <div class="input-group">
+      <i class="fa-solid fa-envelope"></i>
+      <input type="email" id="regEmail" placeholder="Enter your email" required>
+    </div>
+    <div class="error" id="regEmailError"></div>
+    <div class="input-group">
+      <i class="fa-solid fa-phone"></i>
+      <input type="text" id="regPhone" placeholder="Enter your phone" required>
+    </div>
+    <div class="error" id="regPhoneError"></div>
+    <div class="input-group">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" id="regPassword" placeholder="Enter your password" required>
+    </div>
+    <div class="error" id="regPassError"></div>
+    <div class="input-group">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" id="regConfirm" placeholder="Confirm your password" required>
+    </div>
+    <div class="error" id="regConfirmError"></div>
+    <button class="btn" onclick="register()">Register</button>
+    <div class="toggle" onclick="showLogin()">Already have an account? Login</div>
+  </div>
+
+<script>
+  const loginBox = document.getElementById("loginBox");
+  const registerBox = document.getElementById("registerBox");
+
+  function showRegister() {
+    loginBox.style.display = "none";
+    registerBox.style.display = "block";
+  }
+
+  function showLogin() {
+    registerBox.style.display = "none";
+    loginBox.style.display = "block";
+  }
+
+  function login() {
+    const user = document.getElementById("loginUser").value.trim();
+    const pass = document.getElementById("loginPassword").value.trim();
+    let valid = true;
+
+    document.getElementById("loginUserError").textContent = "";
+    document.getElementById("loginPassError").textContent = "";
+
+    if (user === "") {
+      document.getElementById("loginUserError").textContent = "Enter your username";
+      valid = false;
+    }
+    if (pass === "") {
+      document.getElementById("loginPassError").textContent = "Enter your password";
+      valid = false;
+    }
+
+    if (valid && user === "admin" && pass === "12345") {
+      window.location.href = "portfolio.html"; 
+    } else if (valid) {
+      document.getElementById("loginPassError").textContent = "Invalid username or password";
+    }
+  }
+
+  function register() {
+    const user = document.getElementById("regUser").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const phone = document.getElementById("regPhone").value.trim();
+    const pass = document.getElementById("regPassword").value.trim();
+    const confirm = document.getElementById("regConfirm").value.trim();
+    let valid = true;
+
+    document.getElementById("regUserError").textContent = "";
+    document.getElementById("regEmailError").textContent = "";
+    document.getElementById("regPhoneError").textContent = "";
+    document.getElementById("regPassError").textContent = "";
+    document.getElementById("regConfirmError").textContent = "";
+
+    if (user === "") {
+      document.getElementById("regUserError").textContent = "Enter your username";
+      valid = false;
+    }
+    if (email === "") {
+      document.getElementById("regEmailError").textContent = "Enter your email";
+      valid = false;
+    }
+    if (phone === "") {
+      document.getElementById("regPhoneError").textContent = "Enter your phone";
+      valid = false;
+    }
+    if (pass === "") {
+      document.getElementById("regPassError").textContent = "Enter your password";
+      valid = false;
+    }
+
+    if (confirm !== pass || pass.length < 5) {
+      document.getElementById("regConfirmError").textContent =
+        "Passwords must match and be at least 5 characters";
+      valid = false;
+    }
+
+    if (valid) {
+      window.location.href = "portfolio.html"; 
+    }
+  }
+</script>
+
+</body>
+</html>
